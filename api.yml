@@ -1,0 +1,347 @@
+swagger: "2.0"
+info:
+  description: "ELISa API architecture"
+  version: "1.0.0"
+  title: "ELISa API"
+  termsOfService: "https://github.com/mikecokina/elisa"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "GPLv3"
+    url: "https://opensource.org/licenses/gpl-3.0"
+
+host: "localhost"
+basePath: "/v1"
+
+tags:
+- name: "binary"
+  description: "Everything about your Binary Star System"
+  externalDocs:
+    description: "Find out more"
+    url: "https://localhost"
+
+schemes:
+- "https"
+
+paths:
+  /binary/plot/orbit:
+    get:
+      tags:
+      - "binary"
+      summary: "Plot orbit for given system"
+      description: ""
+      operationId: "plotBinaryOrbit"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "body"
+        in: "body"
+        description: "system parameters to get orbit data"
+        required: true
+        schema:
+          $ref: "#/definitions/PlotSystemOrbit"
+
+
+
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Pet"
+        "400":
+          description: "Invalid status value"
+      # security:
+      # - petstore_auth:
+      #   - "write:pets"
+      #   - "read:pets"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+securityDefinitions:
+  petstore_auth:
+    type: "oauth2"
+    authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
+    flow: "implicit"
+    scopes:
+      write:pets: "modify pets in your account"
+      read:pets: "read your pets"
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+
+
+definitions:
+  BinarySystemStar:
+    type: "object"
+    properties:
+      mass:
+        type: "number"
+        format: "float"
+      surface_potential:
+        type: "number"
+        format: "float"
+      synchronicity:
+        type: "number"
+        format: "float"
+        default: 1.0
+      t_eff:
+        type: "number"
+        format: "float"
+      gravity_darkening:
+        type: "number"
+        format: "float"
+        default: 1.0
+      albedo:
+        type: "number"
+        format: "float"
+        default: 1.0
+      metallicity:
+        type: "number"
+        format: "float"
+        default: 0.0
+
+  BinarySystemSystem:
+      type: "object"
+      properties:
+        inclination:
+          type: "number"
+          format: "float"
+          default: 90.0
+        period:
+          type: "number"
+          format: "float"
+        argument_of_periastron:
+          type: "number"
+          format: "float"
+          default: 0.0
+        gamma:
+          type: "number"
+          format: "float"
+          default: 0.0
+        eccentricity:
+          type: "number"
+          format: "float"
+          default: 0.0
+        primary_minimum_time:
+          type: "number"
+          format: "float"
+          default: 0.0
+        phase_shift:
+          type: "number"
+          format: "float"
+          default: 0.0
+
+
+  PlotSystemOrbit:
+    type: "object"
+    properties:
+
+      binary:
+        type: "object"
+        properties:
+          system:
+            $ref: "#/definitions/BinarySystemSystem"
+          primary:
+            $ref: "#/definitions/BinarySystemStar"
+          secondary:
+            $ref: "#/definitions/BinarySystemStar"
+
+
+
+
+
+
+
+
+      orbit:
+        type: "object"
+        properties:
+          id:
+            type: "integer"
+            format: "int64"
+            default: 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  Category:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+    xml:
+      name: "Category"
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      username:
+        type: "string"
+      firstName:
+        type: "string"
+      lastName:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+      phone:
+        type: "string"
+      userStatus:
+        type: "integer"
+        format: "int32"
+        description: "User Status"
+    xml:
+      name: "User"
+  Tag:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+    xml:
+      name: "Tag"
+  Pet:
+    type: "object"
+    required:
+    - "name"
+    - "photoUrls"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      category:
+        $ref: "#/definitions/Category"
+      name:
+        type: "string"
+        example: "doggie"
+      photoUrls:
+        type: "array"
+        xml:
+          name: "photoUrl"
+          wrapped: true
+        items:
+          type: "string"
+      tags:
+        type: "array"
+        xml:
+          name: "tag"
+          wrapped: true
+        items:
+          $ref: "#/definitions/Tag"
+      status:
+        type: "string"
+        description: "pet status in the store"
+        enum:
+        - "available"
+        - "pending"
+        - "sold"
+    xml:
+      name: "Pet"
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
