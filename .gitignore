@@ -13,7 +13,6 @@ env36/*
 __main__.py
 sandbox.py
 my_main.py
-main.py
 
 build/*
 dist/*
